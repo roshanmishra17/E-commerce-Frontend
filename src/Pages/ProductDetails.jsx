@@ -16,10 +16,10 @@ export default function ProductDetails(){
         return res.data;
     };
 
-    const addToCartApi = async (productId,quantity = 1) => {
-        const res = await API.post(`/cart`,{
-            product_id: productId,
-            quantity: quantity,
+    const addToCartApi = async (product_id,quantity = 1) => {
+        const res = await API.post("/cart",{
+            product_id: product_id,
+            quantity: quantity
         })
         return res.data
     }
@@ -48,6 +48,7 @@ export default function ProductDetails(){
         }
 
         try {
+            setAdding(true);
             await addToCartApi(product.id, 1);
             navigate("/cart");
         } catch {
