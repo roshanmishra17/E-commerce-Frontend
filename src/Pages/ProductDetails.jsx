@@ -1,6 +1,8 @@
 import { useState,useEffect } from "react";
 import { useNavigate,useParams } from "react-router-dom";
 import API from "../api/axios";
+import NavBar from "./NavBar";
+import '../CSS/ProductDetails.css'
 
 export default function ProductDetails(){
       
@@ -16,13 +18,14 @@ export default function ProductDetails(){
         return res.data;
     };
 
-    const addToCartApi = async (product_id,quantity = 1) => {
-        const res = await API.post("/cart",{
-            product_id: product_id,
-            quantity: quantity
-        })
-        return res.data
-    }
+    const addToCartApi = async (productId, quantity = 1) => {
+        const res = await API.post("/cart", {
+            product_id: productId,
+            quantity: quantity,
+        });
+
+        return res.data;
+    };
 
     const isAuth = () => {
         return !!localStorage.getItem("token");
@@ -42,7 +45,7 @@ export default function ProductDetails(){
 
     const handleAddToCart = async () => {
 
-        if(!isAuth){
+        if(!isAuth()){
             navigate("/login");
             return;
         }
@@ -57,24 +60,33 @@ export default function ProductDetails(){
             setAdding(false)
         }
     }
-    if (error) return <p>{error}</p>
-    if (!product) return <p>Loading...</p>
+    if (error) return <p className="error">{error}</p>
+    if (!product) return <p className="loading">Loading...</p>
 
     return(
-        <div style={{padding:'20'}}>
-            <img
-                src={product.image_url || "https://via.placeholder.com/200"}
-                alt={product.name}
-                style={{ width: "300px" }}
-            />
-            <h2>{product.name}</h2>
-            <p>{product.description}</p>
-            <p>₹ {product.price}</p>
-            <p>Category: {product.category?.name}</p>
+        <>
+            <NavBar/>
+            <div className="product-details-page">
+                <div className="product-details-container">
+                    <div className="product-image">
+                        <img
+                            src={product.image_url}
+                            alt={product.name}
+                        />
+                    </div>
+                    <div className="product-info">
+                        <h2>{product.name}</h2>
+                        <p className="category">Category: {product.category?.name}</p>
+                        <p className="price">₹ {product.price}</p>
+                        <p className="description">{product.description}</p>
 
-            <button onClick={handleAddToCart} disabled={adding}>
-                {adding ? "Adding..." : "Add to Cart"}
-            </button>
-        </div>    
+
+                        <button className="add-to-cart-btn" onClick={handleAddToCart} disabled={adding}>
+                            {adding ? "Adding..." : "Add to Cart"}
+                        </button>
+                    </div>
+                </div>
+            </div>   
+        </>
     )
 }   
