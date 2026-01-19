@@ -14,6 +14,11 @@ export default function Orders(){
         return res.data;
     };
 
+    const payOrderApi = async (id) => {
+        const res = await API.post(`/orders/${id}/pay`);
+        return res.data;
+    };
+
     useEffect(() => {
         const loadOrders = async () => {
             try {
@@ -33,6 +38,16 @@ export default function Orders(){
         loadOrders();
     }, [navigate]);
 
+    const handlePay = async (id) => {
+        try {
+            await payOrderApi(id);
+            alert("Payment successful");
+            window.location.reload();
+        } catch (err) {
+            alert(err.response?.data?.detail || "Payment failed");
+            console.log()
+        }
+    };
     if (loading) return <p>Loading orders...</p>;
     if (error) return <p style={{ color: "red" }}>{error}</p>;
     if (orders.length === 0) return <p>No orders yet.</p>;
@@ -50,8 +65,14 @@ export default function Orders(){
                     </div>
 
                     <Link to={`/orders/${order.id}`}>View Details</Link>
+                    {order.status === "pending" && (
+                        <button onClick={() => handlePay(order.id)} style={{ marginRight: "10px" }}>
+                            Pay Now
+                        </button>
+                    )}
                 </div>
             ))}
+            
         </div>
     );
 }
