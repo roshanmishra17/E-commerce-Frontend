@@ -1,0 +1,106 @@
+.login-container {
+    min-height: calc(100vh - 150px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #111;
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 380px;
+    background: #1a1a1a;
+    border: 1px solid #222;
+    border-radius: 12px;
+    padding: 28px 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.login-card h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: 24px;
+}
+
+.login-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.login-card input {
+    background: #0f0f0f;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #eee;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.2s ease;
+}
+
+.login-card input:focus {
+    border-color: #2563eb;
+}
+
+.submit-Btn {
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.submit-Btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.submit-Btn:active {
+    transform: translateY(0);
+}
+
+.error-msg {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.signup-text {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 13px;
+    color: #aaa;
+}
+
+.signup-text span {
+    color: #60a5fa;
+    cursor: pointer;
+    margin-left: 4px;
+}
+
+.signup-text span:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: 22px 18px;
+    }
+
+    .login-card h1 {
+        font-size: 20px;
+    }
+}
