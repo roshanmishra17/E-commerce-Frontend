@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
+import NavBar from "./NavBar";
+import '../CSS/SignUp.css'
 
 export default function SignUp(){
     const navigate = useNavigate();
@@ -39,55 +41,58 @@ export default function SignUp(){
     }
 
     return (
-        <div className="signup-container">
-            <div className="signup-card">
-                <h2>Create Account</h2>
+        <>
+            <NavBar/>
+            <div className="signup-container">
+                <div className="signup-card">
+                    <h2>Create Account</h2>
 
-                {error && <p className="error-msg">{error}</p>}
-                {success && <p className="success-msg">{success}</p>}
-                <form onSubmit={handleSignup}>
-                    <input
-                        name="name"
-                        type="text"
-                        placeholder="Full name"
-                        value={form.name}
-                        onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        required
-                    />
+                    {error && <p className="error-msg">{error}</p>}
+                    {success && <p className="success-msg">{success}</p>}
+                    <form onSubmit={handleSignup}>
+                        <input
+                            name="name"
+                            type="text"
+                            placeholder="Full name"
+                            value={form.name}
+                            onChange={(e) => setForm({ ...form, name: e.target.value })}
+                            required
+                        />
 
-                    <input
-                        name="email"
-                        type="email"
-                        placeholder="Email"
-                        value={form.email}
-                        onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        required
-                    />
+                        <input
+                            name="email"
+                            type="email"
+                            placeholder="Email"
+                            value={form.email}
+                            onChange={(e) => setForm({ ...form, email: e.target.value })}
+                            required
+                        />
 
-                    <input
-                        name="password"
-                        type="password"
-                        placeholder="Password"
-                        value={form.password}
-                        onChange={(e) => setForm({ ...form, password: e.target.value })}
-                        required
-                    />
-                    <input
-                        name="confirm"
-                        type="password"
-                        placeholder="Confirm Password"
-                        value={form.confirm}
-                        onChange={(e) => setForm({ ...form, confirm: e.target.value })}
-                        required
-                    />
+                        <input
+                            name="password"
+                            type="password"
+                            placeholder="Password"
+                            value={form.password}
+                            onChange={(e) => setForm({ ...form, password: e.target.value })}
+                            required
+                        />
+                        <input
+                            name="confirm"
+                            type="password"
+                            placeholder="Confirm Password"
+                            value={form.confirm}
+                            onChange={(e) => setForm({ ...form, confirm: e.target.value })}
+                            required
+                        />
 
-                    <button type="submit">Create Account</button>
-                </form>
-                <p className="login-text">
-                    Already have an account?  
-                    <span onClick={() => navigate("/login")}> Login</span>
-                </p>
+                        <button type="submit">Create Account</button>
+                    </form>
+                    <p className="login-text">
+                        Already have an account?  
+                        <span onClick={() => navigate("/login")}> Login</span>
+                    </p>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
