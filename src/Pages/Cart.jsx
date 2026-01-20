@@ -1,17 +1,24 @@
 import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
+import '../CSS/Cart.css'
+import NavBar from "./NavBar";
+import ProductDetails from "./ProductDetails";
 
 export default function Cart(){
     const [cart,setCart] = useState(null)
     const [loading,setLoading] = useState(true)
     const [error,setError] = useState("")
+    const [cartError, setCartError] = useState("");
+    const [confirmId, setConfirmId] = useState(null);
+
+
     const navigate = useNavigate()
 
     const getCartApi = async () => {
-        const res = await API.get('/cart')
-        return res.data
-    }
+        const res = await API.get('/cart');
+        return res.data;
+    };
 
     const updateCartItemApi = async (productId, quantity) => {
         const res = await API.patch(`/cart/items/${productId}`, { quantity });
@@ -26,6 +33,7 @@ export default function Cart(){
         try{
             const data = await getCartApi()
             setCart(data)
+            setCartError("")
         }catch{
             setError("Failed to load Cart")
         }finally{   
@@ -43,17 +51,31 @@ export default function Cart(){
             await updateCartItemApi(productId, newQuantity);
             await loadCart();
         } catch (err) {
-            alert(err.response?.data?.detail || "Stock not available");
+            setCartError(err.response?.data?.detail || "Stock not available");
         }
+
     }
-    const removeItem = async (productId) => {
+    // const removeItem = async (productId) => {
+    //     try {
+    //         await removeCartItemApi(productId);
+    //         await loadCart();
+    //     } catch {
+    //         setCartError("Failed to remove item");
+    //     }
+    // }
+    const openConfirm = (id) => setConfirmId(id);
+    const closeConfirm = () => setConfirmId(null);
+
+    const confirmRemove = async () => {
         try {
-            await removeCartItemApi(productId);
+            await removeCartItemApi(confirmId);
             await loadCart();
         } catch {
-            alert("Failed to remove item");
-        }``
-    }
+            setCartError("Failed to remove item");
+        } finally {
+            closeConfirm();
+        }
+    };
 
     const totalAmount =
         cart?.items.reduce(
@@ -61,41 +83,74 @@ export default function Cart(){
             0
         ) || 0;
 
-    if (loading) return <p>Loading cart...</p>;
-    if (error) return <p style={{ color: "red" }}>{error}</p>;
+    if (loading) return <p className="cart-status">Loading cart...</p>;
+    if (error) return <p className="cart-status error">{error}</p>;
     if (!cart || cart.items.length === 0)
-        return <p>Your cart is empty.</p>;
+        return <p className="cart-status">Your cart is empty.</p>;
 
     return(
-        <div style={{ padding: "20px" }}>
-            <h2>Your Cart</h2>
+        <>
+            <NavBar/>
+            <div className="cart-page">
+                <h2>Your Cart</h2>
 
-            {cart.items.map((item) => (
-                <div key={item.product_id} style={itemStyle}>
-                    <div>
-                        <strong>{item.product_name}</strong>
-                        <p>₹ {item.price}</p>
-                    </div>
+                {cartError && <div className="cart-error-box">{cartError}</div>}
 
-                    <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                        <button onClick={() => updateQuantity(item.product_id, item.quantity - 1)}>-</button>
-                        <span>{item.quantity}</span>
-                        <button onClick={() => updateQuantity(item.product_id, item.quantity + 1)}>+</button>
-                    </div>
+                <div className="cart-list">
+                    {cart.items.map((item) => (
+                        <div className="cart-item">
+                            <img
+                                src={item.image_url || "/no-image.png"}
+                                alt={item.product_name}
+                                className="cart-thumb"
+                            />
+                            <div className="cart-item-content">
+                                <div className="cart-info">
+                                    <strong>{item.product_name}</strong>
+                                    <span>₹ {item.price}</span>
+                                </div>
 
-                    <button onClick={() => removeItem(item.product_id)}>Remove</button>
+                                <div className="cart-qty">
+                                    <button onClick={() => updateQuantity(item.product_id, item.quantity - 1)}>-</button>
+                                    <span>{item.quantity}</span>
+                                    <button onClick={() => updateQuantity(item.product_id, item.quantity + 1)}>+</button>
+                                </div>
+
+                                <button
+                                    className="remove-btn"
+                                    onClick={() => openConfirm(item.product_id)}
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+
+                    ))}
                 </div>
-            ))}
 
-            <hr />
+                <div className="cart-summary">
+                    <h3>Total: ₹ {totalAmount}</h3>
 
-            <h3>Total: ₹ {totalAmount}</h3>
+                    <button className="checkout-btn" onClick={() => navigate("/checkout")}>
+                        Proceed to Checkout
+                    </button>
+                </div>
+            </div>
+            {confirmId && (
+            <div className="modal-overlay">
+                <div className="modal-box">
+                    <h3>Remove item?</h3>
+                    <p>This product will be removed from your cart.</p>
 
-            <button onClick={() => navigate("/checkout")}>
-                Proceed to Checkout
-            </button>
-        </div>
-  )
+                    <div className="modal-actions">
+                        <button onClick={closeConfirm} className="cancel-btn">Cancel</button>
+                        <button onClick={confirmRemove} className="danger-btn">Remove</button>
+                    </div>
+                </div>
+            </div>
+            )}
+        </>
+    )
 }
 const itemStyle = {
   display: "flex",
