@@ -1,6 +1,8 @@
 import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
+import NavBar from "./NavBar";
+import '../CSS/Checkout.css'
 
 
 export default function Checkout(){
@@ -10,20 +12,18 @@ export default function Checkout(){
     const [loading, setLoading] = useState(true);
     const [placing, setPlacing] = useState(false);
     const [error, setError] = useState("");
-
+    const [orderError, setOrderError] = useState("");
+    const [address, setAddress] = useState({
+        fullName: "",
+        phone: "",
+        line1: "",
+        city: "",
+        state: "",
+        pincode: ""
+    });
 
     const createOrder = async () => {
         const res = await API.post("/orders");
-        return res.data;
-    };
-
-    const getMyOrders = async () => {
-        const res = await API.get("/orders");
-        return res.data;
-    };
-
-    const getOrderById = async (id) => {
-        const res = await API.get(`/orders/${id}`);
         return res.data;
     };
 
@@ -47,17 +47,34 @@ export default function Checkout(){
         loadCart();
     }, []);
 
+    
     const placeOrder = async () => {
+        if (
+            !address.fullName ||
+            !address.phone ||
+            !address.line1 ||
+            !address.city ||
+            !address.state ||
+            !address.pincode
+        ) {
+            setOrderError("Please fill in all address fields.");
+            return;
+        }
+
         try {
             setPlacing(true);
+            setOrderError("");
             const order = await createOrder();
             navigate(`/orders/${order.id}`);
         } catch (err) {
-            alert(err.response?.data?.detail || "Order failed");
+            setOrderError(err.response?.data?.detail || "Order failed");
         } finally {
             setPlacing(false);
         }
     };
+
+    
+
     if (loading) return <p>Loading checkout...</p>;
     if (error) return <p style={{ color: "red" }}>{error}</p>;
     if (!cart || cart.items.length === 0) return <p>Your cart is empty.</p>;
@@ -67,21 +84,82 @@ export default function Checkout(){
     );
 
     return (
-        <div style={{ padding: "20px" }}>
-            <h2>Checkout</h2>
+        <>
+            <NavBar/>
+            <div className="checkout-page">
+                <h2>Checkout</h2>
 
-            {cart.items.map((item) => (
-                <div key={item.product_id} style={{ marginBottom: "10px" }}>
-                    {item.product_name} × {item.quantity} — ₹{item.price * item.quantity}
+                <div className="address-section">
+                    <h3>Delivery Address</h3>
+
+                    <div className="address-grid">
+                        <input
+                            placeholder="Full Name"
+                            value={address.fullName}
+                            onChange={(e) => setAddress({ ...address, fullName: e.target.value })}
+                        />
+
+                        <input
+                            placeholder="Phone Number"
+                            value={address.phone}
+                            onChange={(e) => setAddress({ ...address, phone: e.target.value })}
+                        />
+
+                        <input
+                            placeholder="Address Line"
+                            value={address.line1}
+                            onChange={(e) => setAddress({ ...address, line1: e.target.value })}
+                            className="full"
+                        />
+
+                        <input
+                            placeholder="City"
+                            value={address.city}
+                            onChange={(e) => setAddress({ ...address, city: e.target.value })}
+                        />
+
+                        <input
+                            placeholder="State"
+                            value={address.state}
+                            onChange={(e) => setAddress({ ...address, state: e.target.value })}
+                        />
+
+                        <input
+                            placeholder="Pincode"
+                            value={address.pincode}
+                            onChange={(e) => setAddress({ ...address, pincode: e.target.value })}
+                        />
+                    </div>
                 </div>
-            ))}
+                
+                <div className="checkout-list">
+                    {cart.items.map((item) => (
+                        <div key={item.product_id} className="checkout-item">
+                            <img
+                                src={item.image_url}
+                                alt={item.product_name}
+                            />
 
-            <hr />
-            <h3>Total: ₹ {total}</h3>
+                            <div className="checkout-info">
+                                <h4>{item.product_name}</h4>
+                                <span className="qty">Qty: {item.quantity}</span>
+                            </div>
 
-            <button onClick={placeOrder} disabled={placing}>
-                {placing ? "Placing order..." : "Place Order"}
-            </button>
-        </div>
+                            <div className="checkout-price">
+                                ₹ {item.price * item.quantity}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="checkout-summary">
+                    <h3>Total: ₹ {total}</h3>
+
+                    <button onClick={placeOrder} disabled={placing}>
+                        {placing ? "Placing order..." : "Place Order"}
+                    </button>
+                </div>
+            </div>
+        </>
     );
 }
