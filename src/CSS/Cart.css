@@ -184,9 +184,12 @@
 }
 
 .danger-btn:hover {
-    background: #b91c1c;
+    background: rgb(185, 28, 28);
 }
 
+.back{
+    color: white;
+}
 
 @media (max-width: 600px) {
     .cart-item {

@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import '../CSS/Cart.css'
 import NavBar from "./NavBar";
@@ -86,7 +86,7 @@ export default function Cart(){
     if (loading) return <p className="cart-status">Loading cart...</p>;
     if (error) return <p className="cart-status error">{error}</p>;
     if (!cart || cart.items.length === 0)
-        return <p className="cart-status">Your cart is empty.</p>;
+        return <p className="cart-status">Your cart is empty.<br></br><Link to="/products" className="back">Go Back to Products</Link></p>;
 
     return(
         <>
@@ -152,9 +152,3 @@ export default function Cart(){
         </>
     )
 }
-const itemStyle = {
-  display: "flex",
-  justifyContent: "space-between",
-  borderBottom: "1px solid #ddd",
-  padding: "10px 0",
-};
