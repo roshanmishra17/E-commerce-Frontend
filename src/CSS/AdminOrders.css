@@ -1,0 +1,154 @@
+.admin-orders-page {
+  min-height: 100vh;
+  background: #0f0f0f;
+  color: #eee;
+  padding: 32px 24px;
+  font-family: "Poppins", sans-serif;
+  max-width: 1400px;
+  margin: auto;
+}
+
+.admin-orders-page h2 {
+  font-size: 32px;
+  margin-bottom: 28px;
+  letter-spacing: 0.5px;
+}
+
+.admin-status {
+  padding: 40px;
+  text-align: center;
+  color: #aaa;
+  font-size: 18px;
+}
+
+
+.admin-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+
+.admin-order-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  background: linear-gradient(145deg, #1a1a1a, #141414);
+  border: 1px solid #262626;
+  border-radius: 18px;
+  padding: 34px 36px;
+  gap: 28px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.admin-order-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+
+.order-left strong {
+  display: block;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.order-left p {
+  margin: 6px 0;
+  font-size: 16px;
+  color: #b5b5b5;
+}
+
+
+.status {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.status.pending {
+  background: rgba(234, 179, 8, 0.18);
+  color: #facc15;
+}
+
+.status.paid {
+  background: rgba(34, 197, 94, 0.18);
+  color: #4ade80;
+}
+
+.status.shipped {
+  background: rgba(59, 130, 246, 0.18);
+  color: #60a5fa;
+}
+
+.status.delivered {
+  background: rgba(16, 185, 129, 0.18);
+  color: #34d399;
+}
+
+
+.order-items-preview {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.order-items-preview img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid #333;
+  background: #000;
+}
+.order-items-preview img:hover {
+  transform: scale(1.05);
+}
+
+
+.manage-btn {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  text-decoration: none;
+  padding: 14px 26px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.manage-btn:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: translateY(-1px);
+}
+
+
+@media (max-width: 768px) {
+  .admin-order-card {
+    grid-template-columns: 1fr;
+    padding: 22px;
+  }
+
+  .manage-btn {
+    width: auto;              
+    align-self: flex-start;  
+    text-align: center;
+    padding: 12px 22px;
+  }
+
+  .order-items-preview img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .admin-orders-page h2 {
+    font-size: 26px;
+  }
+}
+
