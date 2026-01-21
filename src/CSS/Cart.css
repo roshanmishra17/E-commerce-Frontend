@@ -30,10 +30,8 @@
 }
 
 .cart-item {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    align-items: center;
-    gap: 16px;
+    display: flex;
+    gap: 14px;
     background: rgb(26, 26, 26);
     border: 1px solid #222;
     border-radius: 10px;
@@ -194,6 +192,23 @@
     .cart-item {
         grid-template-columns: 1fr;
         gap: 10px;
+    }
+    .cart-summary {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+    .checkout-btn {
+        width: 100%;
+    }
+    .cart-item-content {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .remove-btn {
+        justify-self: flex-start;
+        width: fit-content;
     }
 
     .cart-summary {
