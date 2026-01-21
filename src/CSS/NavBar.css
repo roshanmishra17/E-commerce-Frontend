@@ -16,6 +16,7 @@
   transition: 0.3s ease;
 }
 
+
 .navbar.scroll {
   transform: translateY(-100%);
 }

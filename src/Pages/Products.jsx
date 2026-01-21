@@ -29,7 +29,7 @@ export default function Products(){
         try {
             const result = await getProductsApi({
                 page: pageNumber,
-                limit: 10,
+                limit: 30,
                 category_id: categoryId || undefined
             });
 
@@ -89,7 +89,7 @@ export default function Products(){
                         <div key={product.id} className="product-card">
                         <p className="product-category">{product.category.name}</p>
                             <img
-                                src={product.image_url || "https://via.placeholder.com/200"}
+                                src={product.image_url}
                                 alt={product.name}
                             />
 

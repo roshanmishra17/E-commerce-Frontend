@@ -51,6 +51,9 @@ export default function NavBar() {
               </li>
             </>
           )}
+          {role === "admin" && (
+            <li><Link to="/admin/orders">Admin Orders</Link></li>
+          )}
 
           {!token ? (
             <li>

@@ -12,10 +12,39 @@ export default function OrderDetails(){
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
+    const [canceling, setCanceling] = useState(false);
+    const [cancelError, setCancelError] = useState("");
+    const [cancelSuccess, setCancelSuccess] = useState("");
+
     const getOrderByIdApi = async (id) => {
         const res = await API.get(`/orders/${id}`);
         return res.data;
     };
+
+    const cancelOrderApi = async (id) => {
+        const res = await API.post(`/orders/${id}/cancel`);
+        return res.data;
+    };
+
+    const handleCancel = async () => {
+        setCancelError("");
+        setCancelSuccess("");
+
+        try {
+            setCanceling(true);
+            await cancelOrderApi(id);
+            setCancelSuccess("Order cancelled successfully");
+
+            setTimeout(() => {
+            navigate("/orders");
+            }, 1200);
+        } catch (err) {
+            setCancelError(err.response?.data?.detail || "Failed to cancel order");
+        } finally {
+            setCanceling(false);
+        }
+    };
+
 
     useEffect(() => {
         const loadOrder = async () => {
@@ -71,7 +100,18 @@ export default function OrderDetails(){
                             <div className="item-total">
                                 <span>₹ {item.quantity * item.product_price}</span>
                             </div>
-                        </div>
+                            {order.status === "pending" && (
+                                <div className="order-actions">
+                                    <button
+                                        className="cancel-btn"
+                                        onClick={handleCancel}
+                                        disabled={canceling}
+                                    >
+                                        {canceling ? "Cancelling..." : "Cancel Order"}
+                                    </button>
+                                </div>
+                            )}
+                      </div>
                     ))}
                 </div>
             </div>

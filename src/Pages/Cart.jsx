@@ -29,6 +29,7 @@ export default function Cart(){
         const res = await API.delete(`/cart/${productId}`);
         return res.data;
     };
+    
     const loadCart = async() => {
         try{
             const data = await getCartApi()
@@ -53,7 +54,6 @@ export default function Cart(){
         } catch (err) {
             setCartError(err.response?.data?.detail || "Stock not available");
         }
-
     }
     // const removeItem = async (productId) => {
     //     try {
@@ -98,9 +98,9 @@ export default function Cart(){
 
                 <div className="cart-list">
                     {cart.items.map((item) => (
-                        <div className="cart-item">
+                        <div className="cart-item" key={item.product_id}>
                             <img
-                                src={item.image_url || "/no-image.png"}
+                                src={item.image_url}
                                 alt={item.product_name}
                                 className="cart-thumb"
                             />
@@ -137,17 +137,17 @@ export default function Cart(){
                 </div>
             </div>
             {confirmId && (
-            <div className="modal-overlay">
-                <div className="modal-box">
-                    <h3>Remove item?</h3>
-                    <p>This product will be removed from your cart.</p>
+                <div className="modal-overlay">
+                    <div className="modal-box">
+                        <h3>Remove item?</h3>
+                        <p>This product will be removed from your cart.</p>
 
-                    <div className="modal-actions">
-                        <button onClick={closeConfirm} className="cancel-btn">Cancel</button>
-                        <button onClick={confirmRemove} className="danger-btn">Remove</button>
+                        <div className="modal-actions">
+                            <button onClick={closeConfirm} className="cancel-btn">Cancel</button>
+                            <button onClick={confirmRemove} className="danger-btn">Remove</button>
+                        </div>
                     </div>
                 </div>
-            </div>
             )}
         </>
     )

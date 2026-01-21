@@ -7,6 +7,8 @@ import Cart from "./Pages/Cart";
 import Checkout from "./Pages/Checkout";
 import Orders from "./Pages/Orders";
 import OrderDetails from "./Pages/OrderDetails";
+import AdminOrders from "./Pages/AdminOrders";
+import AdminOrderDeatils from "./Pages/AdminOrderDetails";
 
 function App() {
 
@@ -22,7 +24,9 @@ function App() {
           <Route path="/cart" element={<Cart/>}/>
           <Route path="/checkout" element = {<Checkout/>}/>
           <Route path="/orders" element={<Orders/>}/>
-          <Route path="orders/:id" element={<OrderDetails/>}/>
+          <Route path="/orders/:id" element={<OrderDetails/>}/>
+          <Route path="/admin/orders" element={<AdminOrders/>}/>
+          <Route path="/admin/orders/:id" element={<AdminOrderDeatils/>}/>
         </Routes>
       </BrowserRouter>
     </>
