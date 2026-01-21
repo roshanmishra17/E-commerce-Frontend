@@ -1,6 +1,8 @@
 import API from "../api/axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import '../CSS/AdminOrders.css'
+import NavBar from "./NavBar";
 
 
 export default function AdminOrders(){
@@ -36,30 +38,41 @@ export default function AdminOrders(){
         load();
     }, [navigate]);
 
-    if(!orders) return <p>Loading...</p>
+    if (loading) return <p className="admin-status">Loading orders...</p>;
+
     return (
-        <div style={{ padding: 20 }}>
-            <h2>Admin – Orders</h2>
+        <>
+            <NavBar/>
+            <div className="admin-orders-page">
+                <h2>Admin – Orders</h2>
 
-            {orders.map((o) => (
-                <div key={o.id} style={cardStyle}>
-                    <div>
+                <div className="admin-orders-list">
+                    {orders.map((o) => (
+                    <div key={o.id} className="admin-order-card">
+                        <div className="order-left">
                         <strong>Order #{o.id}</strong>
+                        <span className={`status ${o.status}`}>{o.status}</span>
                         <p>User ID: {o.user_id}</p>
-                        <p>Status: {o.status}</p>
                         <p>Total: ₹ {o.total_amount}</p>
-                    </div>
 
-                    <Link to={`/admin/orders/${o.id}`}>Manage</Link>
+                        <div className="order-items-preview">
+                            {o.items?.slice(0, 4).map((item) => (
+                            <img
+                                key={item.product_id}
+                                src={item.image_url}
+                                alt={item.product_name}
+                            />
+                            ))}
+                        </div>
+                        </div>
+
+                        <Link className="manage-btn" to={`/admin/orders/${o.id}`}>
+                            Manage
+                        </Link>
+                    </div>
+                    ))}
                 </div>
-            ))}
-        </div>
+            </div>
+        </>
     )
 }   
-const cardStyle = {
-  border: "1px solid #ccc",
-  padding: 10,
-  marginBottom: 10,
-  display: "flex",
-  justifyContent: "space-between"
-};
