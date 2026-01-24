@@ -6,12 +6,12 @@ import '../CSS/Products.css'
 
 export default function Products(){
     const getProductsApi = async (params = {}) => {
-        const res = await API.get("/products", { params });
+        const res = await API.get("/products/", { params });
         return res.data; 
     };
 
     const getCategoriesApi = async () => {
-        const res = await API.get("/categories");
+        const res = await API.get("/categories/");
         return res.data;
     };
 
@@ -76,7 +76,7 @@ export default function Products(){
                         <button
                             key={cat.id}
                             onClick={() => loadProducts(1, cat.id)}
-                            className={selectedCategory === cat.id ? "active" : ""}                        >
+                            className={selectedCategory === cat.id ? "active" : ""}>
                             {cat.name}
                         </button>
                     ))}
