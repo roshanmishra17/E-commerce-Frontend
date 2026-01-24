@@ -44,6 +44,8 @@ export default function Products(){
             setLoading(false);
         }
     };
+    console.log(import.meta.env.VITE_API_BASE_URL);
+
 
     useEffect(() => {
         loadProducts(1);
