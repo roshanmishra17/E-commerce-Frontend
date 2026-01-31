@@ -1,16 +1,61 @@
-# React + Vite
+# E-Commerce Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based frontend for the E-Commerce application.  
+It allows users to browse products, manage cart, place orders, and track order status with authentication support.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User authentication (login & signup)
+- Product listing and product details
+- Category-based product filtering
+- Cart management
+- Checkout flow
+- Order history and order details
+- Admin dashboard for order management
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- React Router
+- Axios
+- Context API
+- CSS
 
-## Expanding the ESLint configuration
+## How to Run Locally
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+git clone https://github.com/roshanmishra17/E-commerce-Frontend
+cd E-commerce-Frontend
+
+npm install
+npm run dev
+```
+The app will run at:
+
+http://localhost:5173
+## Backend API
+
+This frontend consumes a FastAPI backend.
+
+Update the API base URL in `src/api/axios.js`:
+
+```js
+const api = axios.create({
+  baseURL: "http://localhost:8000",
+});
+
+```
+## User Role
+
+- Customer: browse products, manage cart, place orders
+- Admin: manage orders via admin dashboard
+
+## Author
+
+Roshan Mishra
+BSc Computer Science Student
+Frontend & Backend Developer 
+GitHub: https://github.com/roshanmishra17
+
+
+
