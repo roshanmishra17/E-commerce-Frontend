@@ -142,7 +142,6 @@
 @media (max-width: 768px) {
 
   .navbar {
-    flex-wrap: nowrap; 
     justify-content: center;
     padding: 15px;
   }
@@ -162,9 +161,9 @@
     position: absolute;
     display: flex;
     left: 20px;
-    top: 50%;
+    top: 35%;
     transform: translateY(-50%);
-    z-index: 300;
+    z-index: 1000;
   }
 
   .navbar-nav {
