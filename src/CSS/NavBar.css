@@ -8,8 +8,7 @@
   font-family: poppins, sans-serif;
   border-bottom: 1px solid black;
   box-shadow: 0 8px 20px rgba(38, 36, 36, 0.1);
-  position:sticky;
-  top: 0;
+  position:relative;
   z-index: 100;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
@@ -143,26 +142,29 @@
 @media (max-width: 768px) {
 
   .navbar {
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
+    flex-wrap: nowrap; 
+    justify-content: center;
+    padding: 15px;
   }
-
+  .navbar-logo {
+    margin: 0 auto;
+  }
   .navbar-logo h1 {
     font-size: 1.6rem;
   }
   .search-box {
-    width: 90%;
-    margin: 10px auto;
+    order: 3; 
+    width: 100%;
+    max-width: 100%;
+    margin-top: 10px;
   }
-
   .hamburger {
     position: absolute;
     display: flex;
-
     left: 20px;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 300;
   }
 
   .navbar-nav {
