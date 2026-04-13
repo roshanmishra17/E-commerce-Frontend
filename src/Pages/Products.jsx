@@ -2,6 +2,7 @@ import NavBar from "./NavBar";
 import API from "../api/axios";
 import { useState,useEffect } from "react";
 import { Link} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import '../CSS/Products.css'
 
 export default function Products(){
@@ -22,22 +23,32 @@ export default function Products(){
     const [error, setError] = useState("");
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const[sort,setSort] = useState("");
 
+    const location = useLocation()
+    const params = new URLSearchParams(location.search);
+    const searchQuery = params.get("search");
 
-    const loadProducts = async (pageNumber = 1, categoryId = selectedCategory) => {
+    const handleCategoryClick = (categoryId) => {
+        setSelectedCategory(categoryId);
+        loadProducts(1, categoryId, searchQuery, sort);
+    };
+
+    const loadProducts = async (pageNumber = 1, categoryId = selectedCategory,searchQuery = null,sortOption = sort) => {
         setLoading(true);
         try {
             const result = await getProductsApi({
                 page: pageNumber,
                 limit: 30,
-                category_id: categoryId || undefined
+                category_id: categoryId || undefined,
+                search : searchQuery || undefined ,
+                sort: sortOption || undefined
             });
 
             setProducts(result.data);
             setPagination(result.pagination);
             setPage(result.pagination.page);
-            setSelectedCategory(categoryId);
-
+            
         } catch{
             setError("Failed to load products");
         } finally {
@@ -48,8 +59,9 @@ export default function Products(){
 
 
     useEffect(() => {
-        loadProducts(1);
-    }, []);
+        setSelectedCategory(null);
+        loadProducts(1, null, searchQuery, sort);
+    }, [location.search]);
 
     useEffect(() => {
         const loadCategories = async () => {
@@ -65,10 +77,11 @@ export default function Products(){
     return (
         <>
             <NavBar/>
+            {searchQuery && <p>Showing results for: "{searchQuery}"</p>}
             <div className="products-page">
                 <div className="category-bar">
                     <button
-                        onClick={() => loadProducts(1, null)}
+                        onClick={() => handleCategoryClick(null)}
                         className={!selectedCategory ? "active" : ""}
                     >
                         All
@@ -77,7 +90,7 @@ export default function Products(){
                     {categories.map((cat) => (
                         <button
                             key={cat.id}
-                            onClick={() => loadProducts(1, cat.id)}
+                            onClick={() => handleCategoryClick(cat.id)}
                             className={selectedCategory === cat.id ? "active" : ""}>
                             {cat.name}
                         </button>
@@ -105,7 +118,7 @@ export default function Products(){
 
                 {pagination && (
                     <div className="pagination">
-                        <button disabled={page === 1 } onClick={() => loadProducts(page - 1)}>
+                        <button disabled={page === 1 } onClick={() => loadProducts(page - 1, selectedCategory, searchQuery, sort)}>
                             Prev
                         </button>
 
@@ -113,7 +126,8 @@ export default function Products(){
                             Page {pagination.page} of {pagination.total_pages}
                         </span>
 
-                        <button disabled={page === pagination.total_pages} onClick={() => loadProducts(page + 1)}>
+                        <button disabled={page === pagination.total_pages} 
+                            onClick={() => loadProducts(page + 1, selectedCategory, searchQuery, sort)}>
                             Next
                         </button>
                     </div>

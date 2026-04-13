@@ -7,6 +7,7 @@ export default function NavBar() {
 
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setIsScrolled] = useState(false);
+    const [query, setQuery] = useState("");
 
     const token = localStorage.getItem("token")
     const role = localStorage.getItem("role")
@@ -33,7 +34,17 @@ export default function NavBar() {
       <div className="navbar-logo">
         <h1>E-Online</h1>
       </div>
-
+      <div className="search-box">
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <button onClick={() => navigate(`/products?search=${query}`)}>
+          Search
+        </button>
+      </div>
       <nav className={`navbar-nav ${isOpen ? "open" : ""}`}>
         <ul>
           <li>
