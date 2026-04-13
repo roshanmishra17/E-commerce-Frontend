@@ -40,9 +40,14 @@ export default function NavBar() {
           placeholder="Search products..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              navigate(`/products?search=${query}`);
+            }
+          }}
         />
         <button onClick={() => navigate(`/products?search=${query}`)}>
-          Search
+          🔍
         </button>
       </div>
       <nav className={`navbar-nav ${isOpen ? "open" : ""}`}>
