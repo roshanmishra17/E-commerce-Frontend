@@ -71,13 +71,40 @@ export default function Products(){
         loadCategories();
     }, []);
 
-    if (loading) return <p>Loading products...</p>;
-    if (error) return <p style={{ color: "red" }}>{error}</p>;
+    if (loading) {
+        return (
+            <>
+            <NavBar />
+            <div className="status-container">
+                <div className="loader"></div>
+                <p className="status-text">Loading products...</p>
+            </div>
+            </>
+        );
+    }
+
+    if (error) {
+        return (
+            <>
+            <NavBar />
+            <div className="status-container error">
+                <p>⚠ {error}</p>
+            </div>
+            </>
+        );
+    }
 
     return (
         <>
             <NavBar/>
-            {searchQuery && <p>Showing results for: "{searchQuery}"</p>}
+            {searchQuery && (
+                <div className="search-info">
+                    <p>
+                    Showing results for <span>"{searchQuery}"</span>
+                    </p>
+                </div>
+                )
+            }
             <div className="products-page">
                 <div className="category-bar">
                     <button
