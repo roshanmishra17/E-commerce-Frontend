@@ -60,8 +60,28 @@ export default function ProductDetails(){
             setAdding(false)
         }
     }
-    if (error) return <p className="error">{error}</p>
-    if (!product) return <p className="loading">Loading...</p>
+    if (!product) {
+        return (
+            <>
+                <NavBar />
+                <div className="status-container">
+                    <div className="loader"></div>
+                    <p className="status-text">Loading products...</p>
+                </div>
+            </>
+        );
+    }
+
+    if (error) {
+        return (
+            <>
+                <NavBar />
+                <div className="status-container error">
+                    <p>⚠ {error}</p>
+                </div>
+            </>
+        );
+    }
 
     return(
         <>
