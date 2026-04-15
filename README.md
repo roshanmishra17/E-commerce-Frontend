@@ -21,3 +21,18 @@ It provides a seamless shopping experience with product browsing, filtering, car
 
 ### 🔍 Product Details
 <img width="2829" height="1175" alt="image" src="https://github.com/user-attachments/assets/32a6df6e-53f8-4138-b3d7-90ccfaf7bb20" />
+
+---
+
+## 🚀 Features
+
+- 🛍️ Browse products with category filtering
+- 🔍 Search functionality for quick product discovery
+- 📄 Detailed product pages
+- 🛒 Add to cart and manage cart items
+- 🔐 User authentication (login/signup)
+- 💳 Checkout and order placement
+- ⚡ Fast and responsive UI
+- 🔗 Seamless integration with backend APIs
+
+---
