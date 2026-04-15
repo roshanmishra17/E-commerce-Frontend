@@ -59,5 +59,12 @@ It provides a seamless shopping experience with product browsing, filtering, car
 
 ---
 
+## ⚙️ Installation
 
+```bash
+git clone https://github.com/roshanmishra17/E-commerce-Frontend.git
+cd E-commerce-Frontend
+npm install
+npm run dev
+```
 
