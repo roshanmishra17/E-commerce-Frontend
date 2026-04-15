@@ -36,3 +36,16 @@ It provides a seamless shopping experience with product browsing, filtering, car
 - 🔗 Seamless integration with backend APIs
 
 ---
+
+## 🛠️ Tech Stack
+
+- React.js
+- JavaScript
+- Axios (API communication)
+- FastAPI (backend integration)
+- CSS
+
+---
+
+
+
