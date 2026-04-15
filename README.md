@@ -47,5 +47,17 @@ It provides a seamless shopping experience with product browsing, filtering, car
 
 ---
 
+## ⚙️ How It Works
+
+- The frontend communicates with a FastAPI backend using REST APIs.
+- Axios is used to send HTTP requests and handle responses.
+- Product and category data are fetched dynamically from FastAPI endpoints.
+- User authentication is handled via JWT tokens issued by FastAPI.
+- Protected routes ensure only authenticated users can access certain features.
+- Cart data is managed on the client side and synced with backend APIs.
+- Orders are created by sending cart details to FastAPI endpoints.
+
+---
+
 
 
